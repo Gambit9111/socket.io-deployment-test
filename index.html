@@ -1,4 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
+<html>
+<head>
+  <title>Beleka</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div class="h-screen flex flex-col items-center justify-between">
+    <ul id="messages" class="bg-red-500 w-full text-lg font-medium p-5"></ul>
+    <form id="form" action="" class="flex bg-red-500 w-full h-12">
+      <input id="input" autocomplete="off" class="bg-gray-300 w-4/6 px-6" /><button class="w-2/6 text-lg py-1 bg-black text-white">Send</button>
+    </form>
+  </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+  
+    var messages = document.getElementById('messages');
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+  
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit('chat message', input.value);
+        input.value = '';
+      }
+    });
+  
+    socket.on('chat message', function(msg) {
+      var item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <title>Socket.IO chat</title>
@@ -15,33 +65,5 @@
       #messages > li:nth-child(odd) { background: #efefef; }
     </style>
   </head>
-  <body>
-      <ul id="messages"></ul>
-      <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
-      </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io();
-      
-        var messages = document.getElementById('messages');
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
-      
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          if (input.value) {
-            socket.emit('chat message', input.value);
-            input.value = '';
-          }
-        });
-      
-        socket.on('chat message', function(msg) {
-          var item = document.createElement('li');
-          item.textContent = msg;
-          messages.appendChild(item);
-          window.scrollTo(0, document.body.scrollHeight);
-        });
-      </script>
-  </body>
-</html>
+
+</html> -->
